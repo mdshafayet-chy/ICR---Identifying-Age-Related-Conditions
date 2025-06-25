@@ -43,9 +43,6 @@ project_root/
 │   ├── test.csv                # 🧪 Test dataset (used for submission predictions)
 │   └── greeks.csv              # 📄 Metadata (ID + class label timing)
 │
-├── models/                     # 💾 Directory for saving trained models
-│   └── xgb_model.pkl           # ✅ Trained XGBoost model (saved using joblib)
-│
 └── src/                        # 🧠 Modular components for the pipeline
     ├── data_loader.py          # 📥 Loads train, test, and greeks CSVs
     ├── preprocessor.py         # 🧹 Handles KNN imputation and EJ label encoding
