@@ -1,0 +1,17 @@
+
+name: xgboost-pipeline
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - numpy
+  - scikit-learn
+  - xgboost
+  - seaborn
+  - matplotlib
+  - pip
+  - pip:
+      - joblib
+
