@@ -1,79 +1,98 @@
-ICR - Identifying Age-Related Conditions (Kaggle Competition)
-🏆 Silver Medal Solution 🏆
-This repository contains the code for the Silver Medal-winning solution (83rd place out of 8,430 teams) for the "ICR - Identifying Age-Related Conditions" Kaggle competition. The project was developed by MD Shafayet Hossen Chowdhury.
+# ICR - Identifying Age-Related Conditions (Kaggle Competition)
 
-Project Goal
-The goal of this competition was to build a machine learning model to predict the presence of one or more of three medical conditions (Class 1) or the absence of all three (Class 0), based on anonymous health measurements. This project demonstrates a complete, modular pipeline for achieving a top-ranking result.
+> 🏆 **Silver Medal Solution** — Ranked **83rd out of 8,430 teams**
 
-🚀 Getting Started
-This project is structured as a modular Python application. Follow the steps below to set up and run the pipeline.
+This repository contains the complete codebase for the Silver Medal-winning solution for the **"ICR - Identifying Age-Related Conditions"** Kaggle competition. The project was developed by **Md Shafayet Hossen Chowdhury**.
 
-Prerequisites
-Python 3.8+
+---
 
-pip for package management
+##  Project Goal
 
-1. Project Structure
-The repository is organized as follows:
+The objective of this competition was to build a machine learning model that could predict whether an individual shows signs of one or more **age-related conditions (Class 1)** or **none (Class 0)**, based on anonymized health measurements.
 
-icr_competition/
-|-- data/
-|   |-- train.csv
-|   |-- test.csv
-|   `-- greeks.csv
-|
-|-- src/
-|   |-- __init__.py
-|   |-- data_loader.py
-|   |-- feature_engineer.py
-|   `-- model_trainer.py
-|
-|-- main.py
-`-- README.md
+This repository showcases a clean, modular, and production-ready machine learning pipeline that yielded a top-tier result on the leaderboard.
 
-2. Installation
-Clone the repository (or set up the files as provided):
+---
 
-git clone [your-repo-url]
-cd icr_competition
+##  Features
 
-Create a requirements.txt file with the following content:
+- 📥 Clean data loading and preprocessing pipeline
+- 🧹 KNN imputation and label encoding
+- 🔬 Feature selection using:
+  - Correlation filtering
+  - Mann-Whitney U Test
+  - Kruskal-Wallis H Test
+- 📈 Model training with XGBoost
+- 🧪 Evaluation with accuracy, F1 score & confusion matrix
+- 📦 Test-time prediction with submission file generator
+- 💾 Model persistence with `joblib`
 
-pandas
-numpy
-xgboost
-scikit-learn
+---
 
-Install the required packages:
+## Project Structure
+```bash
+project_root/
+│
+├── main.py                     # 🚀 Entry point to run the full ML pipeline
+├── submission.csv              # 📝 Final prediction CSV (Kaggle submission format)
+├── environment.yml             # 📦 Conda environment file (dependencies)
+├── .gitignore                  # 🚫 Specifies untracked files for Git
+│
+├── data/                       # 📊 Input data files
+│   ├── train.csv               # 🔧 Training dataset (includes features and Class)
+│   ├── test.csv                # 🧪 Test dataset (used for submission predictions)
+│   └── greeks.csv              # 📄 Metadata (ID + class label timing)
+│
+├── models/                     # 💾 Directory for saving trained models
+│   └── xgb_model.pkl           # ✅ Trained XGBoost model (saved using joblib)
+│
+└── src/                        # 🧠 Modular components for the pipeline
+    ├── data_loader.py          # 📥 Loads train, test, and greeks CSVs
+    ├── preprocessor.py         # 🧹 Handles KNN imputation and EJ label encoding
+    ├── feature_selector.py     # 🔍 Selects relevant features using correlation and statistical tests
+    ├── model.py                # 🤖 Defines and manages the XGBoost model (train, predict, save, load)
+    ├── evaluator.py            # 📊 Computes accuracy, F1, and shows confusion matrix
+    └── pipeline.py             # 🧩 Connects all modules into a complete workflow
+```
 
-pip install -r requirements.txt
 
-Place the data: Download the competition data from Kaggle and place train.csv, test.csv, and greeks.csv into the data/ directory.
+-----
+##  Setup
 
-3. How to Run
-To execute the full pipeline—from loading data to generating the final submission.csv file—run the main.py script from the root directory:
+>  Recommended: Create and activate the environment using the provided `.yml` file.
+
+```bash
+conda env create -f environment.yml
+conda activate xgboost-pipeline
+```
+##How to Run
+Make sure the dataset files are in the data/ directory as shown below.
+
+Then, execute the pipeline:
+
+```bash
 
 python main.py
 
-The script will print status updates for each step and will create the submission.csv file in the project's root directory upon successful completion.
+```
+You’ll see:
 
-🔧 Code Architecture
-The pipeline is broken down into distinct classes, each with a single responsibility.
+Accuracy and F1-score printed to the console
 
-src/data_loader.py
-Class: DataLoader
+Confusion matrix visualized
 
-Responsibility: Loads the three .csv files (train, test, greeks) and performs the initial merge to add the Alpha feature to the main datasets.
+A trained model saved to models/xgb_model.pkl```text
 
-src/feature_engineer.py
-Class: FeatureEngineer
+All required dependencies are listed in the environment.yml file. Notable ones include:
+```
+xgboost
+scikit-learn
+pandas
+seaborn
+matplotlib
+numpy
+```
 
-Responsibility: Handles all data transformations and feature creation. It learns any necessary parameters from the training set (fit method) and applies them consistently to both the training and test sets (transform method).
+## License
+This project is shared for educational purposes. Use responsibly and credit the original author if reused in public repositories or solutions.
 
-src/model_trainer.py
-Class: ModelTrainer
-
-Responsibility: Manages the XGBoost model. It handles the model's initialization, training on the prepared data, and making predictions on the test set.
-
-main.py
-Orchestrator Script: This is the entry point of the application. It initializes and calls the methods of the above classes in the correct sequence to run the entire pipeline. It also contains the configuration settings (like model parameters and file paths) for easy modification.
